@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Live Updating Tree View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="TreeView" ng-controller="TreeViewController">
+    
+    <h4>{{tree.name}}</h4>
+    <ul >
+        <li ng-repeat="factory in tree.factories">{{factory.factoryName}}</li>
+    </ul>
+    
+</body>
+</html>
