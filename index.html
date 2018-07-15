@@ -1,20 +1,68 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Live Updating Tree View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="app.js"></script>
 </head>
-<body ng-app="TreeView" ng-controller="TreeViewController">
-    
-    <h4>{{tree.name}}</h4>
-    <ul >
+
+<body ng-app="TreeViewApp" ng-controller="TreeViewController">
+    <button ng-click="addFactory()">Add Factory</button>
+    <!-- <ul >{{tree.name}}
         <li ng-repeat="factory in tree.factories">{{factory.factoryName}}</li>
-    </ul>
-    
+    </ul> -->
+    <div id="tree_root">
+        {{tree.name}}
+        <div class="factory" ng-repeat="factory in $ctrl.tree.factories">
+            {{factory.name}}
+            <!-- <div class="factory_child">{{}}</div> -->
+        </div>
+
+        <!-- <h4 class="factory" ng-repeat="factory in tree.factories track by $index">{{factory.name}}</h4> -->
+
+    </div>
+
+    <dialog class="mdl-dialog">
+        <h4 class="mdl-dialog__title">Please enter factory details</h4>
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="factory_name">
+            <label class="mdl-textfield__label" for="factory_name">Factory Name</label>
+        </div>
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="number_of_children">
+            <label class="mdl-textfield__label" for="number_of_children">Number of Children</label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+        </div>
+        
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="lower_bound">
+            <label class="mdl-textfield__label" for="lower_bound">Lower Bound</label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+        </div>
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="upper_bound">
+            <label class="mdl-textfield__label" for="upper_bound">Upper Bound</label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+        </div>
+
+
+
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button ok">Ok</button>
+            <button type="button" class="mdl-button close">Cancel</button>
+        </div>
+    </dialog>
 </body>
+
 </html>
