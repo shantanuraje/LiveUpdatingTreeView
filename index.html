@@ -31,6 +31,7 @@
         <md-button class="md-raised">{{tree.name}}</md-button>
         <div class="factory" ng-repeat="factory in tree.factories" style="color:blue" ng-click="updateDialog($index, factory)">
             {{factory.name}}
+            <md-button class="md-raised" ng-click="deleteFactory($index, $event)"> Delete Factory </md-button>
             <div class="factory_child" ng-repeat="child in factory.children"  ng-click="$event.stopPropagation()" style="color:red">{{child}}</div>
         </div>
     </div>

@@ -62,12 +62,11 @@ function mainController($scope, $mdDialog) {
       });
   };
 
+  $scope.deleteFactory = function (index, event) {
+    event.stopPropagation();
+    $scope.tree.factories.splice(index,1);
+    console.log(index);
+    
+  }
+
 }
-
-
-
-// { name: 'Leah', children: getRandomArbitraryNumbers(0,100,8) },
-//     { name: 'Suzanne', children: getRandomArbitraryNumbers(23,67,10) },
-//     { name: 'Roberto', children: getRandomArbitraryNumbers(33,90,9) },
-//     { name: 'Greg', children: getRandomArbitraryNumbers(12,999,2) },
-//     { name: 'Lynn', children: getRandomArbitraryNumbers(89,9999,15) }
