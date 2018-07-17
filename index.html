@@ -14,10 +14,10 @@
 
 </head>
 
-<body ng-app="TreeViewApp" ng-controller="MainController">
+<body ng-app="TreeViewApp" ng-controller="MainController" style="margin: 1%">
 
     <div layout-align="center">
-        <md-button class="md-raised" ng-click="showDialog($event)"> Open Dialog </md-button>
+        <md-button class="md-raised" ng-click="showDialog()"> Open Dialog </md-button>
 
         <div ng-if="newFactoryData" id="newFactoryData">
             <b layout="row" layout-align="center center" class="md-padding">
@@ -29,9 +29,9 @@
 
     <div id="tree">
         <md-button class="md-raised">{{tree.name}}</md-button>
-        <div class="factory" ng-repeat="factory in tree.factories" style="color:blue">
+        <div class="factory" ng-repeat="factory in tree.factories" style="color:blue" ng-click="updateDialog($index, factory)">
             {{factory.name}}
-            <div class="factory_child" ng-repeat="child in factory.children" style="color:red">{{child}}</div>
+            <div class="factory_child" ng-repeat="child in factory.children"  ng-click="$event.stopPropagation()" style="color:red">{{child}}</div>
         </div>
     </div>
 
@@ -45,6 +45,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
 
     <!-- Your application bootstrap  -->
+    <script src="factory.js"></script>
+    <script src="newFactoryController.js"></script>
+    <script src="updateFactoryController.js"></script>
     <script src="app.js"></script>
 </body>
 

@@ -14,23 +14,23 @@
 
                 <md-input-container>
                     <label>Factory Name</label>
-                    <input ng-model="newFactoryData.factoryName">
+                    <input ng-model="newFactoryData.name" type="text">
                 </md-input-container>
                 <md-input-container>
                     <label>Number of Children</label>
-                    <input ng-model="newFactoryData.numOfChildren">
+                    <input ng-model="newFactoryData.numOfChildren" min="1" max="15" type="number">
                 </md-input-container>
 
                 <div layout="row">
                     <md-input-container>
                         <label>Lower Bound</label>
-                        <input ng-model="newFactoryData.lowerBound">
+                        <input ng-model="newFactoryData.lowerBound" min="0" type="number">
                     </md-input-container>
     
     
                     <md-input-container>
                         <label>Upper Bound</label>
-                        <input ng-model="newFactoryData.upperBound">
+                        <input ng-model="newFactoryData.upperBound" min="0" type="number">
                     </md-input-container>
                 </div>
 
