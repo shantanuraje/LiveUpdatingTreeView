@@ -1,68 +1,51 @@
 <!DOCTYPE html>
 <html>
+<!-- http://odyniec.net/articles/turning-lists-into-trees/ -->
 
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Live Updating Tree View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
-    <script src="app.js"></script>
+
+
 </head>
 
-<body ng-app="TreeViewApp" ng-controller="TreeViewController">
-    <button ng-click="addFactory()">Add Factory</button>
-    <!-- <ul >{{tree.name}}
-        <li ng-repeat="factory in tree.factories">{{factory.factoryName}}</li>
-    </ul> -->
-    <div id="tree_root">
-        {{tree.name}}
-        <div class="factory" ng-repeat="factory in $ctrl.tree.factories">
-            {{factory.name}}
-            <!-- <div class="factory_child">{{}}</div> -->
-        </div>
+<body ng-app="TreeViewApp" ng-controller="MainController">
 
-        <!-- <h4 class="factory" ng-repeat="factory in tree.factories track by $index">{{factory.name}}</h4> -->
+    <div layout-align="center">
+        <md-button class="md-raised" ng-click="showDialog($event)"> Open Dialog </md-button>
+
+        <div ng-if="newFactoryData" id="newFactoryData">
+            <b layout="row" layout-align="center center" class="md-padding">
+                {{newFactoryData}}
+            </b>
+        </div>
 
     </div>
 
-    <dialog class="mdl-dialog">
-        <h4 class="mdl-dialog__title">Please enter factory details</h4>
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="factory_name">
-            <label class="mdl-textfield__label" for="factory_name">Factory Name</label>
+    <div id="tree">
+        <md-button class="md-raised">{{tree.name}}</md-button>
+        <div class="factory" ng-repeat="factory in tree.factories" style="color:blue">
+            {{factory.name}}
+            <div class="factory_child" ng-repeat="child in factory.children" style="color:red">{{child}}</div>
         </div>
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="number_of_children">
-            <label class="mdl-textfield__label" for="number_of_children">Number of Children</label>
-            <span class="mdl-textfield__error">Input is not a number!</span>
-        </div>
-        
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="lower_bound">
-            <label class="mdl-textfield__label" for="lower_bound">Lower Bound</label>
-            <span class="mdl-textfield__error">Input is not a number!</span>
-        </div>
-
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="upper_bound">
-            <label class="mdl-textfield__label" for="upper_bound">Upper Bound</label>
-            <span class="mdl-textfield__error">Input is not a number!</span>
-        </div>
+    </div>
 
 
 
-        <div class="mdl-dialog__actions">
-            <button type="button" class="mdl-button ok">Ok</button>
-            <button type="button" class="mdl-button close">Cancel</button>
-        </div>
-    </dialog>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+    <!-- Your application bootstrap  -->
+    <script src="app.js"></script>
 </body>
 
 </html>

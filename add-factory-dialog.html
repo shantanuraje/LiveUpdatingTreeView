@@ -1,0 +1,54 @@
+<md-dialog aria-label="Please enter deatils of the new Factory">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Please enter deatils of the new Factory</h2>
+                <span flex></span>
+                <!-- <md-button class="md-icon-button" ng-click="cancel()">
+                </md-button> -->
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div layout="column" class="md-dialog-content">
+
+                <md-input-container>
+                    <label>Factory Name</label>
+                    <input ng-model="newFactoryData.factoryName">
+                </md-input-container>
+                <md-input-container>
+                    <label>Number of Children</label>
+                    <input ng-model="newFactoryData.numOfChildren">
+                </md-input-container>
+
+                <div layout="row">
+                    <md-input-container>
+                        <label>Lower Bound</label>
+                        <input ng-model="newFactoryData.lowerBound">
+                    </md-input-container>
+    
+    
+                    <md-input-container>
+                        <label>Upper Bound</label>
+                        <input ng-model="newFactoryData.upperBound">
+                    </md-input-container>
+                </div>
+
+            </div>
+
+        </md-dialog-content>
+
+
+
+
+        <md-dialog-actions layout="row">
+
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+            <md-button ng-click="answer()">
+                Ok
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

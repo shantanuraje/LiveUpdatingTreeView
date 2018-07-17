@@ -1,6 +1,3 @@
-ul {
-    list-style: circle;
-}
-li {
-    margin-left: 20px;
+md-input-container{
+    margin: 0;
 }
