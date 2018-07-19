@@ -5,14 +5,46 @@ myApp.controller('MainController', mainController);
 myApp.controller('newFactoryController', newFactoryController);
 myApp.controller('updateFactoryController', updateFactoryController);
 
-let socket = io();
+// let socket = io();
 
-function mainController($scope, $http, $mdDialog) {
+myApp.factory('socket', function ($rootScope) {
+  var socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {  
+        var args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
+    }
+  };
+});
+
+function mainController($scope, $http, $mdDialog, socket) {
   $scope.tree = {
     name: 'Root',
     factories: []
   };
+  socket.on('all factories', function (factories) {
+    console.log(factories);
+    
+    $scope.tree.factories = $scope.tree.factories.concat(factories);
+    console.log($scope.tree);
+    
+  });
   console.log($scope.tree.factories);
+
 
 
   $scope.showDialog = function (factory) {
@@ -32,7 +64,7 @@ function mainController($scope, $http, $mdDialog) {
       .then(function (answer) {
         let factory = new Factory(answer.name, answer.numOfChildren, answer.lowerBound, answer.upperBound);
         console.log(factory);
-        
+
         $scope.tree.factories.push(factory);
         socket.emit('new factory', factory);
 

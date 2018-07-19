@@ -3,17 +3,18 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var Factory = require('./app/models/factory.js');
+// var Schema = mongoose.Schema;
 
-var FactorySchema = new Schema({
-    name: String,
-    numOfChildren: Number,
-    lowerBound: Number,
-    upperBound: Number,
-    children: Array
-});
+// var FactorySchema = new Schema({
+//     name: String,
+//     numOfChildren: Number,
+//     lowerBound: Number,
+//     upperBound: Number,
+//     children: Array
+// });
 
-var Factory = mongoose.model('Factory', FactorySchema);
+// var Factory = mongoose.model('Factory', FactorySchema);
 
 mongoose.connect('mongodb://127.0.0.1:27017/test');
 let db = mongoose.connection;
@@ -29,9 +30,17 @@ io.on('connection', function (socket) {
         factoryInstance.save(function (err) {
             if (err) return handleError(err);
             // saved!
-          });
+        });
+
+
     });
+    
+    Factory.find({}, function (err, docs) {
+        io.emit('all factories', docs)
+        
+    })
 });
+
 
 
 http.listen(3000, function () {
