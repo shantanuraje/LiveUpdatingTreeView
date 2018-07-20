@@ -26,6 +26,12 @@ function mainController($scope, $http, $mdDialog, socket) {
     $scope.tree.factories.splice(index, 1);
     console.log("Tree", $scope.tree);
   })
+
+  socket.on("send:updated factory", function (result) {
+    console.log("send:updated factory", result);
+    $scope.tree.factories[result.index] = result.factory;
+    
+  })
   
 
   $scope.showDialog = function (factory) {
@@ -42,7 +48,7 @@ function mainController($scope, $http, $mdDialog, socket) {
     })
       .then(function (answer) {
         let factory = new Factory(answer.name, answer.numOfChildren, answer.lowerBound, answer.upperBound);
-        console.log(factory);
+        console.log("add factory", factory);
         socket.emit('add:factory', factory);
       }, function () {
         $scope.newFactoryData = 'You cancelled the dialog.';
@@ -63,9 +69,15 @@ function mainController($scope, $http, $mdDialog, socket) {
 
     })
       .then(function (result) {
-        console.log(result);
+        console.log("update factory", result);
+        let id = result.factory._id;
         let factory = new Factory(result.factory.name, result.factory.numOfChildren, result.factory.lowerBound, result.factory.upperBound);
-        $scope.tree.factories[result.index] = factory;
+        console.log(factory)
+        socket.emit("update:factory", {'index': result.index,'id': id, 'factory': factory});
+        // console.log(factory);
+        
+        // $scope.tree.factories[result.index] = factory;
+
       }, function () {
         $scope.newFactoryData = 'You cancelled the dialog.';
       });

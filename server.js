@@ -51,6 +51,15 @@ io.on('connection', function (socket) {
             if (err) return handleError(err);
         })
     })
+
+    socket.on("update:factory", function (data) {
+        console.log("update:factory", data);
+        io.sockets.emit("send:updated factory", {'index':data.index, 'factory': data.factory});
+        Factory.findOneAndUpdate(data.id,data.factory, function (err) {
+            if (err) return handleError(err);
+        })
+        
+    })
     //Whenever someone disconnects this piece of code executed
     socket.on('disconnect', function () {
         console.log('A user disconnected');
