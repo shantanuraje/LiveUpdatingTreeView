@@ -1,7 +1,17 @@
-var express = require('express');
+// var express = require('express');
+// var app = express();
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
+var http = require("http");
+var express = require("express");
+var socketIO = require("socket.io");
+
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = http.createServer(app);
+var io = socketIO(server);
+
+var port = process.env.PORT || 3000;
+
 var mongoose = require('mongoose');
 var Factory = require('./app/models/factory.js');
 
@@ -16,16 +26,16 @@ io.on('connection', function (socket) {
     console.log('A user connected');
     
     Factory.find({}, function (err, docs) {
-        console.log(docs);
-        socket.emit("initialization", docs)
+        console.log("initialization");
+        io.sockets.emit("initialization", docs)
     })
     
     socket.on("add:factory", function (factory) {
-        console.log(factory);
+        console.log("add:factory");
         
         let factoryInstance = new Factory(factory);
-        socket.emit("send:factory", factoryInstance)
-        socket.broadcast.emit("send:factory", factoryInstance)
+        io.sockets.emit("send:factory", factoryInstance)
+        // socket.broadcast.emit("send:factory", factoryInstance)
         factoryInstance.save(function (err) {
             if (err) return handleError(err);
             // saved!
@@ -33,11 +43,11 @@ io.on('connection', function (socket) {
     });
 
     socket.on("delete:factory", function (data) {
-        console.log(data);
+        console.log("delete:factory");
         
-        socket.emit("remove:factory", data.index)
-        socket.broadcast.emit("remove:factory", data.index)
-        Factory.remove(data.factory, function (err) {
+        io.sockets.emit("remove:factory", data.index);
+        // socket.broadcast.emit("remove:factory", data.index)
+        Factory.findByIdAndRemove(data.factory._id, function (err) {
             if (err) return handleError(err);
         })
     })
@@ -47,38 +57,12 @@ io.on('connection', function (socket) {
     });
 });
 
-// io.on('connection', function (socket) {
-//     console.log('a user connected');
-
-//     socket.on("init", function () {
-
-//     })
-
-//     socket.on('add:factory', function (factory) {
-//         console.log('add:factory', factory);
-//         let factoryInstance = new Factory(factory);
-//         factoryInstance.save(function (err) {
-//             if (err) return handleError(err);
-//             // saved!
-//         });
-
-
-//     });
-
-//     Factory.find({}, function (err, docs) {
-//         io.emit('all factories', docs)
-
-//     })
-// });
-
-
-
-http.listen(3000, function () {
-    console.log('listening on *:3000');
+server.listen(port, function () {
+    console.log('listening on *:${port}');
 });
 
 
-const handleError = function() {
+const handleError = function(err) {
     console.error(err);
     // handle your error
 };
