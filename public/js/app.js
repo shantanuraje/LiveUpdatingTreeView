@@ -7,42 +7,33 @@ myApp.controller('updateFactoryController', updateFactoryController);
 
 // let socket = io();
 
-myApp.factory('socket', function ($rootScope) {
-  var socket = io.connect();
-  return {
-    on: function (eventName, callback) {
-      socket.on(eventName, function () {  
-        var args = arguments;
-        $rootScope.$apply(function () {
-          callback.apply(socket, args);
-        });
-      });
-    },
-    emit: function (eventName, data, callback) {
-      socket.emit(eventName, data, function () {
-        var args = arguments;
-        $rootScope.$apply(function () {
-          if (callback) {
-            callback.apply(socket, args);
-          }
-        });
-      })
-    }
-  };
-});
 
 function mainController($scope, $http, $mdDialog, socket) {
   $scope.tree = {
     name: 'Root',
     factories: []
   };
-  socket.on('all factories', function (factories) {
-    console.log(factories);
-    
-    $scope.tree.factories = $scope.tree.factories.concat(factories);
+  socket.on('initialization', function (docs) {
+    console.log(docs);
+    // $scope.tree.factories = [];
+    $scope.tree.factories = $scope.tree.factories.concat(docs);
     console.log($scope.tree);
     
-  });
+  })
+
+  socket.on('send:factory', function (factory) {
+    console.log(factory);
+    
+    $scope.tree.factories.push(factory);
+    console.log($scope.tree.factories);
+    
+    
+  })
+
+  socket.on("remove:factory", function (index) {
+    $scope.tree.factories.splice(index, 1);
+  })
+  
   console.log($scope.tree.factories);
 
 
@@ -65,8 +56,8 @@ function mainController($scope, $http, $mdDialog, socket) {
         let factory = new Factory(answer.name, answer.numOfChildren, answer.lowerBound, answer.upperBound);
         console.log(factory);
 
-        $scope.tree.factories.push(factory);
-        socket.emit('new factory', factory);
+        socket.emit('add:factory', factory);
+
 
       }, function () {
         $scope.newFactoryData = 'You cancelled the dialog.';
@@ -98,8 +89,10 @@ function mainController($scope, $http, $mdDialog, socket) {
       });
   };
 
-  $scope.deleteFactory = function (index, event) {
+  $scope.deleteFactory = function (index, event, factory) {
     event.stopPropagation();
+    socket.emit('delete:factory', {'index': index, 'factory': factory});
+    // socket.broadcast.emit('delete:factory', {'index': index, 'factory': factory});
     $scope.tree.factories.splice(index, 1);
     console.log(index);
 
