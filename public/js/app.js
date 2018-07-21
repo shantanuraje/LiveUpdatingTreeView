@@ -1,7 +1,7 @@
-let myApp = angular.module('TreeViewApp', ['ngMaterial', 'ngMessages']);
+let myApp = angular.module('TreeViewApp', ['ngMaterial', 'ngMessages', 'ngAnimate']);
 
 myApp.controller('MainController', mainController);
-myApp.controller('newFactoryController', newFactoryController);
+myApp.controller('newFactoryController', ['$scope', newFactoryController]);
 myApp.controller('updateFactoryController', updateFactoryController);
 
 function mainController($scope, $http, $mdDialog, socket) {
@@ -37,9 +37,9 @@ function mainController($scope, $http, $mdDialog, socket) {
   $scope.showDialog = function (factory) {
     // Appending dialog to document.body to cover sidenav in docs app
     $mdDialog.show({
-      controller: newFactoryController,
       templateUrl: 'add-factory-dialog.html',
       parent: angular.element(document.body),
+      controller: newFactoryController,
       // targetEvent: ev,
       locals: { factory: factory },
       clickOutsideToClose: true,

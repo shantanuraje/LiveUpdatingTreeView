@@ -32,7 +32,7 @@
         <div class="factory" ng-repeat="factory in tree.factories" style="color:blue" ng-click="updateDialog($index, factory)">
             {{factory.name}}
             <md-button class="md-raised" ng-click="deleteFactory($index, $event, factory)"> Delete Factory </md-button>
-            <div class="factory_child" ng-repeat="child in factory.children"  ng-click="$event.stopPropagation()" style="color:red">{{child}}</div>
+            <div class="factory_child" ng-repeat="child in factory.children" ng-click="$event.stopPropagation()" style="color:red">{{child}}</div>
         </div>
     </div>
 
@@ -42,6 +42,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
     <!-- Angular Material Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
 

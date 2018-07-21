@@ -5,32 +5,36 @@
                 <h2>Please enter deatils of the new Factory</h2>
                 <span flex></span>
                 <!-- <md-button class="md-icon-button" ng-click="cancel()">
-                </md-button> -->
+                    </md-button> -->
             </div>
         </md-toolbar>
 
         <md-dialog-content>
             <div layout="column" class="md-dialog-content">
-
                 <md-input-container>
                     <label>Factory Name</label>
                     <input ng-model="newFactoryData.name" type="text">
+                    <span ng-if="factoryNameInValid">Please enter a valid name {{factoryNameInValid}}</span>
                 </md-input-container>
+
                 <md-input-container>
                     <label>Number of Children</label>
                     <input ng-model="newFactoryData.numOfChildren" min="1" max="15" type="number">
+                    <span ng-if="numOfChildrenInValid">Please enter a value between 1 and 15 {{numOfChildrenInValid}}</span>
                 </md-input-container>
 
                 <div layout="row">
                     <md-input-container>
                         <label>Lower Bound</label>
                         <input ng-model="newFactoryData.lowerBound" min="0" type="number">
+                        <span ng-if="lowerBoundInValid">Please enter a number. Make sure lowerbound is less than the upperBound {{lowerBoundInValid}}</span>
                     </md-input-container>
-    
-    
+
+
                     <md-input-container>
                         <label>Upper Bound</label>
                         <input ng-model="newFactoryData.upperBound" min="0" type="number">
+                        <span ng-if="upperBoundInValid">Please enter a number. Make sure lowerbound is less than the upperBound {{upperBoundInValid}}</span>
                     </md-input-container>
                 </div>
 
