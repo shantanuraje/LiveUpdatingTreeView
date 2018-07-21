@@ -1,7 +1,5 @@
 function newFactoryController($scope, $mdDialog) {
-  
-  $scope.error = false;
-  
+
   $scope.factoryNameInValid = false;
   $scope.numOfChildrenInValid = false;
   $scope.lowerBoundInValid = false;
@@ -30,7 +28,7 @@ function newFactoryController($scope, $mdDialog) {
       }else{
         $scope.factoryNameInValid = false;
       }
-      if ($scope.newFactoryData.numOfChildren < 1 || $scope.newFactoryData.numOfChildren > 15) {
+      if (typeof $scope.newFactoryData.numOfChildren != 'number'|| $scope.newFactoryData.numOfChildren < 1 || $scope.newFactoryData.numOfChildren > 15) {
         $scope.numOfChildrenInValid = true;
       }else{
         $scope.numOfChildrenInValid = false;

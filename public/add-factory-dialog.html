@@ -26,14 +26,14 @@
                 <div layout="row">
                     <md-input-container>
                         <label>Lower Bound</label>
-                        <input ng-model="newFactoryData.lowerBound" min="0" type="number">
+                        <input ng-model="newFactoryData.lowerBound" type="number">
                         <span ng-if="lowerBoundInValid">Please enter a number. Make sure lowerbound is less than the upperBound {{lowerBoundInValid}}</span>
                     </md-input-container>
 
 
                     <md-input-container>
                         <label>Upper Bound</label>
-                        <input ng-model="newFactoryData.upperBound" min="0" type="number">
+                        <input ng-model="newFactoryData.upperBound" type="number">
                         <span ng-if="upperBoundInValid">Please enter a number. Make sure lowerbound is less than the upperBound {{upperBoundInValid}}</span>
                     </md-input-container>
                 </div>
