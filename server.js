@@ -1,7 +1,8 @@
-// var express = require('express');
-// var app = express();
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
+var config = require('./config/config.js')
+var environment = process.env.NODE_ENV || 'development';
+console.log(config[environment]);
+
+
 var http = require("http");
 var express = require("express");
 var socketIO = require("socket.io");
@@ -15,12 +16,22 @@ var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var Factory = require('./app/models/factory.js');
 
-mongoose.connect('mongodb://127.0.0.1:27017/test');
+mongoose.connect(config[environment].db);
 let db = mongoose.connection;
 
-console.log(process.env.NODE_ENV);
 
 app.use(express.static(__dirname + '/public'));
+
+server.listen(config[environment].port, config[environment].host, function () {
+    console.log(`listening on ${config[environment].host}: ${config[environment].port}`);
+});
+
+
+const handleError = function(err) {
+    console.error(err);
+    // handle your error
+};
+
 
 //Whenever someone connects this gets executed
 io.on('connection', function (socket) {
@@ -81,13 +92,3 @@ io.on('connection', function (socket) {
         console.log('A user disconnected');
     });
 });
-
-server.listen(port, function () {
-    console.log('listening on *:${port}');
-});
-
-
-const handleError = function(err) {
-    console.error(err);
-    // handle your error
-};
