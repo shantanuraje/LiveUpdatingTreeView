@@ -42,9 +42,9 @@ function updateFactoryController($scope, $mdDialog, index, factory) {
   }
   
   $scope.answer = function () {
-    if (!$scope.validateFactory()) {
-      $mdDialog.hide({ index: index, factory: factory });
-    }
+    // if (!$scope.validateFactory()) {
+    // }
+    $mdDialog.hide({ index: index, factory: factory });
   };
 
 }

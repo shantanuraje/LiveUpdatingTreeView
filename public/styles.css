@@ -1,3 +1,36 @@
 md-input-container{
     margin: 0;
 }
+#header{
+    background-color: #0a3d62;
+    width: 100%;
+}
+.md-toolbar-tools h1{
+    font-size: 26px;
+}
+.factory-name{
+    padding: 1rem;
+}
+.md-chips{
+    box-shadow: unset !important;
+}
+.edit-button{
+    background-color: #e0b178 !important;
+}
+.delete-button{
+    background-color: #e07e78 !important;
+}
+.factories{
+    margin-left: 2%;
+}
+.children{
+    margin-left: 2.5%;
+}
+/* #main{
+    background-color: #78e08f;
+} */
+md-chip{
+    background-color: #0a3d62 !important;
+    /* border-color:  #e7865c !important;*/
+    color: white !important; 
+} 

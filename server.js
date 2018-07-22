@@ -18,6 +18,7 @@ var Factory = require('./app/models/factory.js');
 mongoose.connect('mongodb://127.0.0.1:27017/test');
 let db = mongoose.connection;
 
+console.log(process.env.NODE_ENV);
 
 app.use(express.static(__dirname + '/public'));
 
@@ -34,10 +35,15 @@ io.on('connection', function (socket) {
         console.log("add:factory");
         
         let factoryInstance = new Factory(factory);
-        io.sockets.emit("send:factory", factoryInstance)
         // socket.broadcast.emit("send:factory", factoryInstance)
         factoryInstance.save(function (err) {
-            if (err) return handleError(err);
+            if (err){
+                io.sockets.emit("error:validation", err);
+                return handleError(err);  
+            }else{
+                io.sockets.emit("send:factory", factoryInstance)
+
+            }
             // saved!
         });
     });
@@ -54,10 +60,20 @@ io.on('connection', function (socket) {
 
     socket.on("update:factory", function (data) {
         console.log("update:factory", data);
-        io.sockets.emit("send:updated factory", {'index':data.index, 'factory': data.factory});
-        Factory.findOneAndUpdate(data.id,data.factory, function (err) {
-            if (err) return handleError(err);
-        })
+        let error = Factory.validateSync(data.factory);
+        console.log(error);
+        
+        // Factory.findOneAndUpdate(data.id,data.factory, function (err) {
+        //     if (err){
+        //         io.sockets.emit("error:validation", err);
+        //         return handleError(err);  
+        //     }else{
+
+        //         io.sockets.emit("send:updated factory", {'index':data.index, 'factory': data.factory});
+
+        //     }
+
+        // })
         
     })
     //Whenever someone disconnects this piece of code executed

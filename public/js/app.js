@@ -6,6 +6,10 @@ myApp.controller('updateFactoryController', updateFactoryController);
 
 function mainController($scope, $http, $mdDialog, socket) {
 
+  socket.on("error:validation", function (error) {
+    $scope.validationFailed = error.message;
+    console.log(error);
+  })
   socket.on('initialization', function (docs) {
     console.log('initialization', docs);
     $scope.tree = {
@@ -34,13 +38,14 @@ function mainController($scope, $http, $mdDialog, socket) {
   })
   
 
-  $scope.showDialog = function (factory) {
+  $scope.showDialog = function (ev) {
     // Appending dialog to document.body to cover sidenav in docs app
+    let factory;
     $mdDialog.show({
       templateUrl: 'add-factory-dialog.html',
       parent: angular.element(document.body),
       controller: newFactoryController,
-      // targetEvent: ev,
+      targetEvent: ev,
       locals: { factory: factory },
       clickOutsideToClose: true,
       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.

@@ -7,33 +7,91 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Live Updating Tree View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Angular Material requires Angular.js Libraries -->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css" defer>
     <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
 
 
 </head>
 
-<body ng-app="TreeViewApp" ng-controller="MainController" style="margin: 1%">
+<body ng-app="TreeViewApp" ng-controller="MainController" layout="row" layout-fill="layout-fill">
+    <div layout="column" layout-fill="layout-fill">
+        <md-toolbar id="header">
+            <div class="md-toolbar-tools" layout-align="space-between center">
+                <h1>Welcome to the Live Updating Tree View Application</h2>
+                    <div layout="row" layout-align="end center">
+                        <md-button class="md-raised" ng-click="showDialog($event)">Add Factory</md-button>
+                        <!-- <md-button class="md-fab md-raised md-mini add-factory" ng-click="showDialog($event)">
+                            <md-icon>
+                                <i class="material-icons">add</i>
+                            </md-icon>
+                        </md-button>
+                        <span>Add Factory</span> -->
 
-    <div layout-align="center">
-        <md-button class="md-raised" ng-click="showDialog()"> Open Dialog </md-button>
+                    </div>
+            </div>
+        </md-toolbar>
 
-        <div ng-if="newFactoryData" id="newFactoryData">
-            <b layout="row" layout-align="center center" class="md-padding">
-                {{newFactoryData}}
-            </b>
-        </div>
+        <md-content layout-padding id="main">
 
-    </div>
+            <div flex="none" layout-padding="layout-padding" layout="column">
+                <!-- <h5 ng-bind=validationFailed></h5> -->
+                <!-- <div layout-align="end">
+                    <md-button class="md-raised" ng-click="showDialog()"> Open Dialog </md-button> -->
 
-    <div id="tree">
-        <md-button class="md-raised">{{tree.name}}</md-button>
-        <div class="factory" ng-repeat="factory in tree.factories" style="color:blue" ng-click="updateDialog($index, factory)">
-            {{factory.name}}
-            <md-button class="md-raised" ng-click="deleteFactory($index, $event, factory)"> Delete Factory </md-button>
-            <div class="factory_child" ng-repeat="child in factory.children" ng-click="$event.stopPropagation()" style="color:red">{{child}}</div>
-        </div>
+                <!-- <div ng-if="newFactoryData" id="newFactoryData">
+                        <b layout="row" layout-align="center center" class="md-padding">
+                            {{newFactoryData}}
+                        </b>
+                    </div> -->
+
+                <!-- </div> -->
+
+                <div id="tree">
+                    <md-chips>
+                        <md-chip>{{tree.name}}</md-chip>
+                    </md-chips>
+                    <!-- <md-button class="md-raised">{{tree.name}}</md-button><br> -->
+                    <div layout="column" class="factories">
+                        <div ng-repeat="factory in tree.factories" style="color:blue">
+                            <!-- <md-button class="md-raised" ng-click="deleteFactory($index, $event, factory)"> Delete Factory </md-button> -->
+                            <div layout="row" layout-align="start center">
+                                <md-chips>
+                                    <md-chip>{{factory.name}}</md-chip>
+                                </md-chips>
+
+                                <!-- <span class="factory-name"></span> -->
+                                <md-button class="edit-button md-fab md-mini" ng-click="updateDialog($index, factory)">
+                                    <md-tooltip md-direction="top">Edit Factory</md-tooltip>
+                                    <md-icon>
+                                        <i class="material-icons">edit</i>
+                                    </md-icon>
+                                </md-button>
+
+                                <md-button class="delete-button md-fab md-mini" ng-click="deleteFactory($index, $event, factory)">
+                                    <md-tooltip md-direction="right">Delete Factory</md-tooltip>
+                                    <md-icon>
+                                        <i class="material-icons">delete</i>
+                                    </md-icon>
+                                </md-button>
+                            </div>
+                            <div layout="column" class="children">
+                                <div ng-repeat="child in factory.children" ng-click="$event.stopPropagation()">
+                                    <md-chips>
+                                        <md-chip>{{child}}</md-chip>
+                                    </md-chips>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </md-content>
+
     </div>
 
 

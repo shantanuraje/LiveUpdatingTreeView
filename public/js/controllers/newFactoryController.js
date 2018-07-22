@@ -48,9 +48,9 @@ function newFactoryController($scope, $mdDialog) {
     }
   
     $scope.answer = function () {
-      if (!$scope.validateFactory()) {
-        $mdDialog.hide($scope.newFactoryData);       
-      }
+      // if (!$scope.validateFactory()) {
+      // }
+      $mdDialog.hide($scope.newFactoryData);       
     };
   
   }
