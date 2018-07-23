@@ -1,7 +1,7 @@
 # Live Updating Tree View Application
 Back-End Programming Challenge : Demonstrate your knowledge of several technologies, including databases, backend design, and UI/UX by creating a live-updating tree view as a web application.
 
-##Requirements
+## Requirements
 - The ​tree ​should ​contain ​a ​group ​of ​nodes, ​with ​a main ​(root) ​node ​that ​can ​have ​any ​number ​of ‘factories’.
 - These ​factory ​nodes ​can ​in ​turn ​generate ​a ​set amount ​of ​random ​numbers ​(up ​to ​15), represented ​as ​child ​nodes ​of ​their ​respective factories.
 - Factories ​and ​children ​should ​be ​created through ​some ​means ​of ​user ​input ​(right ​click, button ​press, ​etc) ​specifying ​the ​number ​of children ​to ​generate ​(up ​to ​15) ​and ​the ​ranges ​of those ​children.
@@ -39,4 +39,4 @@ Back-End Programming Challenge : Demonstrate your knowledge of several technolog
 + **AWS Deployment**
 	+ The application has been deployed to an AWS server
 	+ Check out [ec2-18-191-252-51.us-east-2.compute.amazonaws.com:3000](ec2-18-191-252-51.us-east-2.compute.amazonaws.com:3000)
-	+ If you encounter any issues with the AWS instance, please contact me on [shantanu.rajenimbalkar@gmail.com] and I will fix it as soon as possible.
+	+ If you encounter any issues with the AWS instance, please contact me on shantanu.rajenimbalkar@gmail.com and I will fix it as soon as possible.
