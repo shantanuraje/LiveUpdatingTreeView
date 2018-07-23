@@ -2,7 +2,7 @@ var config = {
     "development": {
         port: 3000,
         db: 'mongodb://127.0.0.1:27017/test',
-        host: 'localhost'
+        host: '0.0.0.0'
     },
     "production": {
         port: 3000,

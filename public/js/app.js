@@ -42,7 +42,11 @@ function mainController($scope, $http, $mdDialog, socket) {
 
   socket.on("send:updated factory", function (result) {
     console.log("send:updated factory", result);
-    $scope.tree.factories[result.index] = result.factory;
+    let i = $scope.tree.factories.findIndex(function (factory) {
+      console.log(result._id, factory._id, result._id === factory._id);
+      return result._id === factory._id;
+    })
+    $scope.tree.factories[i] = result;
 
   })
 
@@ -71,18 +75,17 @@ function mainController($scope, $http, $mdDialog, socket) {
       .then(function (answer) {
         console.log("answer:", answer);
         
-        let newFactory = new Factory(null, answer.name,  answer.numOfChildren, answer.lowerBound, answer.upperBound);
+        let factory = new Factory(null, answer.name,  answer.numOfChildren, answer.lowerBound, answer.upperBound);
         
-        console.log("add factory", newFactory);
-        socket.emit('add:factory', newFactory);
+        console.log("add factory", factory);
+        socket.emit('add:factory', factory);
       }, function () {
         $scope.newFactoryData = 'You cancelled the dialog.';
       });
   };
 
-  $scope.updateDialog = function (index, factory) {
-    console.log(index, factory);
-    let factoryNames = []
+  $scope.updateDialog = function (factory) {
+    console.log(factory);
     let test = {
       _id: factory._id,
       name: factory.name,
@@ -91,6 +94,8 @@ function mainController($scope, $http, $mdDialog, socket) {
       upperBound: factory.upperBound,
       children: factory.children
     }
+
+    let factoryNames = []
     $scope.tree.factories.forEach(element => {
       if (element.name !== factory.name) {
         // console.log("Names:", element.name)
@@ -104,7 +109,7 @@ function mainController($scope, $http, $mdDialog, socket) {
       templateUrl: 'add-factory-dialog.html',
       parent: angular.element(document.body),
       // targetEvent: ev,
-      locals: { index: index, factory: test, factoryNames: factoryNames },
+      locals: { factory: test, factoryNames: factoryNames },
       clickOutsideToClose: true,
       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
     })
@@ -116,8 +121,8 @@ function mainController($scope, $http, $mdDialog, socket) {
         let _factory = result.factory;
         if(factory.lowerBound != _factory.lowerBound || factory.upperBound != _factory.upperBound || factory.numOfChildren != _factory.numOfChildren)
           _factory = new Factory(id, result.factory.name, result.factory.numOfChildren, result.factory.lowerBound, result.factory.upperBound);
-        console.log(factory)
-        socket.emit("update:factory", { 'index': result.index, 'id': id, 'factory': _factory });
+        console.log(_factory)
+        socket.emit("update:factory", _factory);
         // console.log(factory);
 
         // $scope.tree.factories[result.index] = factory;

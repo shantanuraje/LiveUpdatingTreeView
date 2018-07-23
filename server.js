@@ -94,13 +94,13 @@ io.on('connection', function (socket) {
     socket.on("update:factory", function (data) {
         console.log("update:factory", data);
         console.log("Factory validation successful");
-        Factory.findByIdAndUpdate(data.id, data.factory, function (err) {
+        Factory.findByIdAndUpdate(data._id, data, function (err) {
             if (err) {
                 io.sockets.emit("error:validation", err);
                 return handleError(err);
             } else {
 
-                io.sockets.emit("send:updated factory", { 'index': data.index, 'factory': data.factory });
+                io.sockets.emit("send:updated factory", data);
 
             }
 

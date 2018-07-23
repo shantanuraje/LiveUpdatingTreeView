@@ -1,7 +1,7 @@
-function updateFactoryController($scope, $mdDialog, index, factory, factoryNames) {
+function updateFactoryController($scope, $mdDialog, factory, factoryNames) {
 
 
-  console.log(index, factory, factoryNames);
+  console.log(factory, factoryNames);
   // let test = factory;
   $scope.newFactoryData = factory;
   console.log("updateFactoryController");
@@ -100,7 +100,7 @@ function updateFactoryController($scope, $mdDialog, index, factory, factoryNames
   $scope.answer = function () {
     if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound()) {
       if ($scope.validateLowerLessThanUpper()) {
-        $mdDialog.hide({ index: index, factory: factory });
+        $mdDialog.hide({factory: factory });
         console.log("awesome");
         
       }
