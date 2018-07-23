@@ -41,7 +41,7 @@ function updateFactoryController($scope, $mdDialog, index, factory) {
 
   $scope.validateLowerBound = function name() {
     console.log($scope.newFactoryData.lowerBound, typeof $scope.newFactoryData.lowerBound);
-    if (typeof parseInt($scope.newFactoryData.lowerBound) === 'number' && $scope.newFactoryData.lowerBound !== undefined && !isNaN(parseInt($scope.newFactoryData.lowerBound)) && isFinite(parseInt($scope.newFactoryData.lowerBound))) {
+    if (typeof parseFloat($scope.newFactoryData.lowerBound) === 'number' && $scope.newFactoryData.lowerBound !== undefined && !isNaN(parseFloat($scope.newFactoryData.lowerBound)) && isFinite(parseFloat($scope.newFactoryData.lowerBound))) {
       $scope.lowerBoundInValid = false;
       console.log("lowerBound is valid");
       return true;
@@ -54,7 +54,7 @@ function updateFactoryController($scope, $mdDialog, index, factory) {
 
   $scope.validateUpperBound = function name() {
     console.log($scope.newFactoryData.upperBound, typeof $scope.newFactoryData.upperBound);
-    if (typeof parseInt($scope.newFactoryData.upperBound) === 'number' && $scope.newFactoryData.upperBound !== undefined && !isNaN(parseInt($scope.newFactoryData.upperBound)) && isFinite(parseInt($scope.newFactoryData.upperBound))) {
+    if (typeof parseFloat($scope.newFactoryData.upperBound) === 'number' && $scope.newFactoryData.upperBound !== undefined && !isNaN(parseFloat($scope.newFactoryData.upperBound)) && isFinite(parseFloat($scope.newFactoryData.upperBound))) {
       $scope.upperBoundInValid = false;
       console.log("upperBound is valid");
       return true;

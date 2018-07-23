@@ -75,9 +75,6 @@ io.on('connection', function (socket) {
 
     socket.on("update:factory", function (data) {
         console.log("update:factory", data);
-        let error = Factory.validateSync(data.factory);
-        console.log(error);
-        
         Factory.findOneAndUpdate(data.id,data.factory, function (err) {
             if (err){
                 io.sockets.emit("error:validation", err);
