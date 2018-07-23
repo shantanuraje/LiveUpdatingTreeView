@@ -1,10 +1,5 @@
 function newFactoryController($scope, $mdDialog) {
 
-  // $scope.factoryNameInValid = false;
-  // $scope.numOfChildrenInValid = false;
-  // $scope.lowerBoundInValid = false;
-  // $scope.upperBoundInValid = false;
-
   $scope.newFactoryData = {
     name: '',
     numOfChildren: '',
@@ -22,10 +17,6 @@ function newFactoryController($scope, $mdDialog) {
     $mdDialog.cancel();
   };
 
-//   factoryNameInValid
-// numOfChildrenInValid
-// lowerBoundInValid
-// upperBoundInValid
   $scope.validateFactoryName = function () {
     if ($scope.newFactoryData.name == "" || $scope.newFactoryData.name.match(/[^a-zA-Z0-9 ]/)) {
       $scope.factoryNameInValid = true;
