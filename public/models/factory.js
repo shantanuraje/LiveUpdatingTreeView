@@ -10,7 +10,7 @@ class Factory{
     getRandomArbitraryNumbers(numOfChildren, lowerBound, upperBound) {
         let result = [];
         while(numOfChildren > 0){
-            let num = Math.floor(Math.random() * (upperBound - lowerBound) + lowerBound)
+            let num = Math.random() * (upperBound - lowerBound) + lowerBound
             if(!result.includes(num)){
               result.push(num);
               numOfChildren--;
