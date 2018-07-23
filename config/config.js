@@ -1,3 +1,6 @@
+// Setup for development and production environments
+//if development, application runs on localhost, can be accessed on LAN
+//if production, application runs on specified AWS instance
 var config = {
     "development": {
         port: 3000,
@@ -11,4 +14,5 @@ var config = {
     }
 };
 
+//export this configuration
 module.exports = config;
