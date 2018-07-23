@@ -1,114 +1,110 @@
-var config = require('./config/config.js')
-var environment = process.env.NODE_ENV || 'development';
-console.log(config[environment]);
+//load environment config file
+let config = require('./config/config.js');
+//check if production (AWS) or development (0.0.0.0) environment
+let environment = process.env.NODE_ENV || 'development';
 
-// var validateFactoryFields = require('./app/validation/validateFactory.js')
-// console.log(validateFactoryFields);
+//log environment parameters
+console.log("Environment: ", environment);
+console.log("Environment Config: ", config[environment]);
 
-var http = require("http");
-var express = require("express");
-var socketIO = require("socket.io");
+//get required modules for http and socket server creation 
+let http = require("http");
+let express = require("express");
+let socketIO = require("socket.io");//using Socket.io library
+let app = express();
+let server = http.createServer(app); //setup http express server to server index.html
+let io = socketIO(server); //setup socket server for real-time bidirectional communication
 
-var app = express();
-var server = http.createServer(app);
-var io = socketIO(server);
+// require mongoose to connect to and work on MongoDB database
+let mongoose = require('mongoose');
+let Factory = require('./app/models/factory.js'); // import Factory Model
 
-
-var mongoose = require('mongoose');
-var Factory = require('./app/models/factory.js');
-var FactorySchema = Factory.schema;
-
-// console.log(Factory);
+// setup connection with MongoDB according to environment
 mongoose.connect(config[environment].db);
 let db = mongoose.connection;
 
-
+//expressjs serves static files stored in /public directory
 app.use(express.static(__dirname + '/public'));
 
+//start the server on specified ip and port number (according to config)
 server.listen(config[environment].port, config[environment].host, function () {
-    console.log(`listening on ${config[environment].host}: ${config[environment].port}`);
+    console.log(`Listening on ${config[environment].host}: ${config[environment].port}`);
 });
 
 
-const handleError = function (err) {
-    console.error(err);
-    // handle your error
-};
-
-
-
-//Whenever someone connects this gets executed
+//setup listeners for out socket.io server
 io.on('connection', function (socket) {
     console.log('A user connected');
 
+    //INITIALIZATION: get all documents in database, emit all documents to client for initialization
     Factory.find({}, function (err, docs) {
-        console.log("initialization");
+        console.log("Retrieving all documents");
         io.sockets.emit("initialization", docs)
     })
 
+    //ADD FACTORY: listener event to handle when a new factory is added from the client
     socket.on("add:factory", function (factory) {
-        console.log("add:factory");
-
         let factoryInstance = new Factory(factory);
-        console.log(factoryInstance);
+        console.log("add:factory", factoryInstance);
 
+        //save this new factory to database. Factory is automatically validated by validator functions in FactorySchema (./app/models/factory.js)
         factoryInstance.save(function (err) {
             if (err) {
+                //if error is encounterd, emit error message back to client
                 io.sockets.emit("error:validation", err);
-                return handleError(err);
+                console.error(err);
             } else {
+                //if no error, check if new factory name already exists in database
                 console.log("Factory validation successful");
                 Factory.findOne({name: factoryInstance.name}, function (err, factory) {
                     if (err) {
+                        //if name already exists, emit error message back to client
                         console.log(err);
-                        io.sockets.emit("error:not found", err)
+                        io.sockets.emit("error:duplicate name", err);
                     }else{
-
-                        io.sockets.emit("send:factory", factory)
+                        //if no error, emit new factory back to client
+                        io.sockets.emit("send:factory", factory);
                     }
-                    
                 })
-
             }
-            // saved!
         });
-
-
     });
 
+    //DELETE FACTORY: listener event to handle when a factory is deleted from the client
     socket.on("delete:factory", function (data) {
         console.log("delete:factory");
-
-        // socket.broadcast.emit("remove:factory", data.index)
+        //find this factory by querying the database
         Factory.findByIdAndRemove(data.factory._id, function (err) {
             if (err) {
-                io.sockets.emit("error:validation", err);
-                return handleError(err)
+                //if not found, emit error message back to client
+                io.sockets.emit("error:not found", err);
+                console.error(err);
             } else {
+                //if found, emit id of factory to be removed back to client
                 io.sockets.emit("remove:factory", data.index);
-
             }
-        })
-    })
+        });
+    });
 
+    //UPDATE FACTORY: listener event to handle when a factory is updated from the client
     socket.on("update:factory", function (data) {
         console.log("update:factory", data);
         console.log("Factory validation successful");
+
+        //save this updated factory to database. Factory is automatically validated by validator functions in FactorySchema
         Factory.findByIdAndUpdate(data._id, data, function (err) {
             if (err) {
+                //if error is encounterd, emit error message back to client
                 io.sockets.emit("error:validation", err);
-                return handleError(err);
+                console.error(err);
             } else {
-
+                //if no error, emit updated factory back to client
                 io.sockets.emit("send:updated factory", data);
-
             }
+        });
+    });
 
-        })
-
-
-    })
-    //Whenever someone disconnects this piece of code executed
+    //DISCONNECTION: Whenever someone disconnects this piece of code executed
     socket.on('disconnect', function () {
         console.log('A user disconnected');
     });
