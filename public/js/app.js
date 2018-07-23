@@ -75,13 +75,14 @@ function mainController($scope, $http, $mdDialog, socket) {
 
   $scope.updateDialog = function (index, factory) {
     console.log(index, factory);
+    let factoryNames = $scope.factoryNames.filter(name => name !== factory.name)
     // Appending dialog to document.body to cover sidenav in docs app
     $mdDialog.show({
       controller: updateFactoryController,
       templateUrl: 'add-factory-dialog.html',
       parent: angular.element(document.body),
       // targetEvent: ev,
-      locals: { index: index, factory: factory, factoryNames: $scope.factoryNames },
+      locals: { index: index, factory: factory, factoryNames: factoryNames },
       clickOutsideToClose: true,
       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
 
