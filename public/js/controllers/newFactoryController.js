@@ -105,15 +105,16 @@ function newFactoryController($scope, $mdDialog, factoryNames) {
   }
 
   $scope.answer = function () {
-    if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound() ) {
-      if ($scope.validateLowerLessThanUpper()) {
-          $mdDialog.hide($scope.newFactoryData);
-          console.log("awesome");
-          
-      }
-    }else{
-      console.log("something went wrong");
-    }
+    // if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound() ) {
+    //   if ($scope.validateLowerLessThanUpper()) {
+    //     $mdDialog.hide($scope.newFactoryData);
+    //     console.log("awesome");
+        
+    //   }
+    // }else{
+    //   console.log("something went wrong");
+    // }
+    $mdDialog.hide($scope.newFactoryData);
   };
 
 }

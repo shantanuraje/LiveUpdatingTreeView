@@ -1,5 +1,6 @@
 class Factory{
-    constructor(name, numOfChildren, lowerBound, upperBound){
+    constructor(_id = null, name, numOfChildren, lowerBound, upperBound){
+        this._id = _id;
         this.name = name;
         this.numOfChildren = numOfChildren;
         this.lowerBound = lowerBound;

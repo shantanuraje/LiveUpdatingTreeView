@@ -16,20 +16,18 @@ function mainController($scope, $http, $mdDialog, socket) {
       name: 'Root',
       factories: docs
     }
-    $scope.factoryNames = []
-    $scope.tree.factories.forEach(element => {
-      // console.log("Names:", element.name)
-      $scope.factoryNames.push(element.name);
-    });
-    console.log("Tree", $scope.tree);    
+
+    console.log("Tree", $scope.tree);
   })
 
+
+
   socket.on('send:factory', function (factory) {
-    console.log('send:factory', factory);    
+    console.log('send:factory', factory);
     $scope.tree.factories.push(factory);
-    console.log("Tree", $scope.tree);    
+    console.log("Tree", $scope.tree);
   })
-  
+
   socket.on("remove:factory", function (index) {
     console.log("remove:factory", index);
     $scope.tree.factories.splice(index, 1);
@@ -39,9 +37,9 @@ function mainController($scope, $http, $mdDialog, socket) {
   socket.on("send:updated factory", function (result) {
     console.log("send:updated factory", result);
     $scope.tree.factories[result.index] = result.factory;
-    
+
   })
-  
+
   // $scope.getFactoryNames = function () {
   //   let factoryNames = []
   //   $scope.tree.factories.forEach(element => {
@@ -75,26 +73,44 @@ function mainController($scope, $http, $mdDialog, socket) {
 
   $scope.updateDialog = function (index, factory) {
     console.log(index, factory);
-    let factoryNames = $scope.factoryNames.filter(name => name !== factory.name)
+    let factoryNames = []
+    let test = {
+      _id: factory._id,
+      name: factory.name,
+      numOfChildren: factory.numOfChildren,
+      lowerBound: factory.lowerBound,
+      upperBound: factory.upperBound,
+      children: factory.children
+    }
+    $scope.tree.factories.forEach(element => {
+      if (element.name !== factory.name) {
+        // console.log("Names:", element.name)
+        factoryNames.push(element.name);
+      }
+    });
+
     // Appending dialog to document.body to cover sidenav in docs app
     $mdDialog.show({
       controller: updateFactoryController,
       templateUrl: 'add-factory-dialog.html',
       parent: angular.element(document.body),
       // targetEvent: ev,
-      locals: { index: index, factory: factory, factoryNames: factoryNames },
+      locals: { index: index, factory: test, factoryNames: factoryNames },
       clickOutsideToClose: true,
       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-
     })
       .then(function (result) {
+        console.log("old factory", factory);
         console.log("update factory", result);
+        console.log(factory.lowerBound != result.lowerBound || factory.upperBound != result.upperBound || factory.numOfChildren != result.numOfChildren);
         let id = result.factory._id;
-        let factory = new Factory(result.factory.name, result.factory.numOfChildren, result.factory.lowerBound, result.factory.upperBound);
+        let _factory = result.factory;
+        if(factory.lowerBound != _factory.lowerBound || factory.upperBound != _factory.upperBound || factory.numOfChildren != _factory.numOfChildren)
+          _factory = new Factory(id, result.factory.name, result.factory.numOfChildren, result.factory.lowerBound, result.factory.upperBound);
         console.log(factory)
-        socket.emit("update:factory", {'index': result.index,'id': id, 'factory': factory});
+        socket.emit("update:factory", { 'index': result.index, 'id': id, 'factory': _factory });
         // console.log(factory);
-        
+
         // $scope.tree.factories[result.index] = factory;
 
       }, function () {
@@ -104,7 +120,7 @@ function mainController($scope, $http, $mdDialog, socket) {
 
   $scope.deleteFactory = function (index, event, factory) {
     event.stopPropagation();
-    socket.emit('delete:factory', {'index': index, 'factory': factory});
+    socket.emit('delete:factory', { 'index': index, 'factory': factory });
   }
 
 }

@@ -12,29 +12,30 @@
         <md-dialog-content>
             <div layout="column" class="md-dialog-content">
                 <md-input-container>
+                    <input type="hidden" ng-model="newFactoryData._id">
                     <label>Factory Name</label>
-                    <input ng-model="newFactoryData.name" type="text">
+                    <input ng-model="newFactoryData.name" >
                     <span class="error-messages" ng-if="factoryNameInValid">Please enter a valid name</span>
                     <span class="error-messages" ng-if="duplicateFactoryName">This factory name exists. Please use another name</span>
                 </md-input-container>
 
                 <md-input-container>
                     <label>Number of Children</label>
-                    <input ng-model="newFactoryData.numOfChildren" type="number" min="1" max="15">
+                    <input ng-model="newFactoryData.numOfChildren">
                     <span class="error-messages" ng-if="numOfChildrenInValid">Please enter a value between 1 and 15 </span>
                 </md-input-container>
 
                 <div layout="row">
                     <md-input-container>
                         <label>Lower Bound</label>
-                        <input ng-model="newFactoryData.lowerBound" type="number">
+                        <input ng-model="newFactoryData.lowerBound">
                         <span class="error-messages" ng-if="lowerBoundInValid">Please enter a number.</span>
                     </md-input-container>
 
 
                     <md-input-container>
                         <label>Upper Bound</label>
-                        <input ng-model="newFactoryData.upperBound" type="number">
+                        <input ng-model="newFactoryData.upperBound">
                         <span class="error-messages" ng-if="upperBoundInValid">Please enter a number. Make sure lowerbound is less than the upperBound</span>
                     </md-input-container>
                 </div>

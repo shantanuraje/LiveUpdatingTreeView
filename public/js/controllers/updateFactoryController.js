@@ -2,7 +2,8 @@ function updateFactoryController($scope, $mdDialog, index, factory, factoryNames
 
 
   console.log(index, factory, factoryNames);
-  $scope.newFactoryData = factory
+  // let test = factory;
+  $scope.newFactoryData = factory;
   console.log("updateFactoryController");
   $scope.hide = function () {
     $mdDialog.hide();
@@ -97,15 +98,18 @@ function updateFactoryController($scope, $mdDialog, index, factory, factoryNames
   }
   
   $scope.answer = function () {
-    if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound()) {
-      if ($scope.validateLowerLessThanUpper()) {
-        $mdDialog.hide({ index: index, factory: factory });
-          console.log("awesome");
-          
-      }
-    }else{
-      console.log("something went wrong");
-    }
+    // if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound()) {
+    //   if ($scope.validateLowerLessThanUpper()) {
+    //     $mdDialog.hide({ index: index, factory: factory });
+    //     console.log("awesome");
+        
+    //   }
+    // }else{
+    //   console.log("something went wrong");
+    // }
+    console.log("submitting", factory);
+    
+    $mdDialog.hide({ index: index, factory: factory });
     
   };
 
