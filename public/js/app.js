@@ -1,7 +1,7 @@
 let myApp = angular.module('TreeViewApp', ['ngMaterial', 'ngMessages', 'ngAnimate']);
 
 myApp.controller('MainController', mainController);
-myApp.controller('newFactoryController', ['$scope', newFactoryController]);
+myApp.controller('newFactoryController', newFactoryController);
 myApp.controller('updateFactoryController', updateFactoryController);
 
 function mainController($scope, $http, $mdDialog, socket) {
@@ -16,6 +16,11 @@ function mainController($scope, $http, $mdDialog, socket) {
       name: 'Root',
       factories: docs
     }
+    $scope.factoryNames = []
+    $scope.tree.factories.forEach(element => {
+      // console.log("Names:", element.name)
+      $scope.factoryNames.push(element.name);
+    });
     console.log("Tree", $scope.tree);    
   })
 
@@ -37,6 +42,14 @@ function mainController($scope, $http, $mdDialog, socket) {
     
   })
   
+  // $scope.getFactoryNames = function () {
+  //   let factoryNames = []
+  //   $scope.tree.factories.forEach(element => {
+  //     console.log("Names:", element.name)
+  //   });
+  // }
+
+  // $scope.getFactoryNames();
 
   $scope.showDialog = function (ev) {
     // Appending dialog to document.body to cover sidenav in docs app
@@ -46,7 +59,7 @@ function mainController($scope, $http, $mdDialog, socket) {
       parent: angular.element(document.body),
       controller: newFactoryController,
       targetEvent: ev,
-      locals: { factory: factory },
+      locals: { factory: factory, factoryNames: $scope.factoryNames },
       clickOutsideToClose: true,
       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
 
@@ -68,7 +81,7 @@ function mainController($scope, $http, $mdDialog, socket) {
       templateUrl: 'add-factory-dialog.html',
       parent: angular.element(document.body),
       // targetEvent: ev,
-      locals: { index: index, factory: factory },
+      locals: { index: index, factory: factory, factoryNames: $scope.factoryNames },
       clickOutsideToClose: true,
       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
 

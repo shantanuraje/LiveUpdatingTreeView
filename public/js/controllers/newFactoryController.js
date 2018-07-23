@@ -1,5 +1,8 @@
-function newFactoryController($scope, $mdDialog) {
+function newFactoryController($scope, $mdDialog, factoryNames) {
 
+  
+  console.log(factoryNames);
+  
   $scope.newFactoryData = {
     name: '',
     numOfChildren: '',
@@ -17,9 +20,26 @@ function newFactoryController($scope, $mdDialog) {
     $mdDialog.cancel();
   };
 
+  $scope.checkDuplicateFactoryName = function () {
+    console.log($scope.newFactoryData.name, factoryNames);
+    
+    if (factoryNames.includes($scope.newFactoryData.name)) {
+      $scope.duplicateFactoryName = true;
+      console.log("Duplicate name: cannot be added");
+      return true;
+      
+    } else {
+      $scope.duplicateFactoryName = false;
+      console.log("Valid name: can be added");
+      return false;
+      
+    }
+  }
+
   $scope.validateFactoryName = function () {
     if ($scope.newFactoryData.name == "" || $scope.newFactoryData.name.match(/[^a-zA-Z0-9 ]/)) {
       $scope.factoryNameInValid = true;
+      $scope.duplicateFactoryName = false;
       console.log("not valid");
       return false;
       
@@ -85,7 +105,7 @@ function newFactoryController($scope, $mdDialog) {
   }
 
   $scope.answer = function () {
-    if ($scope.validateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound()) {
+    if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound() ) {
       if ($scope.validateLowerLessThanUpper()) {
           $mdDialog.hide($scope.newFactoryData);
           console.log("awesome");
