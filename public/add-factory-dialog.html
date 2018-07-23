@@ -14,29 +14,30 @@
                 <md-input-container>
                     <label>Factory Name</label>
                     <input ng-model="newFactoryData.name" type="text">
-                    <span ng-if="factoryNameInValid">Please enter a valid name {{factoryNameInValid}}</span>
+                    <span class="error-messages" ng-if="factoryNameInValid">Please enter a valid name {{factoryNameInValid}}</span>
                 </md-input-container>
 
                 <md-input-container>
                     <label>Number of Children</label>
-                    <input ng-model="newFactoryData.numOfChildren" min="1" max="15" type="number">
-                    <span ng-if="numOfChildrenInValid">Please enter a value between 1 and 15 {{numOfChildrenInValid}}</span>
+                    <input ng-model="newFactoryData.numOfChildren" type="number" min="1" max="15">
+                    <span class="error-messages" ng-if="numOfChildrenInValid">Please enter a value between 1 and 15 {{numOfChildrenInValid}}</span>
                 </md-input-container>
 
                 <div layout="row">
                     <md-input-container>
                         <label>Lower Bound</label>
                         <input ng-model="newFactoryData.lowerBound" type="number">
-                        <span ng-if="lowerBoundInValid">Please enter a number. Make sure lowerbound is less than the upperBound {{lowerBoundInValid}}</span>
+                        <span class="error-messages" ng-if="lowerBoundInValid">Please enter a number.{{lowerBoundInValid}}</span>
                     </md-input-container>
 
 
                     <md-input-container>
                         <label>Upper Bound</label>
                         <input ng-model="newFactoryData.upperBound" type="number">
-                        <span ng-if="upperBoundInValid">Please enter a number. Make sure lowerbound is less than the upperBound {{upperBoundInValid}}</span>
+                        <span class="error-messages" ng-if="upperBoundInValid">Please enter a number. Make sure lowerbound is less than the upperBound {{upperBoundInValid}}</span>
                     </md-input-container>
                 </div>
+                <span class="error-messages" ng-if="lowerNotLessThanUpper">Make sure lowerbound is less than the upperBound</span>
 
             </div>
 

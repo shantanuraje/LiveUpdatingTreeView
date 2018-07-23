@@ -33,4 +33,8 @@ md-chip{
     background-color: #0a3d62 !important;
     /* border-color:  #e7865c !important;*/
     color: white !important; 
-} 
+}
+.error-messages{
+    font-size: 0.8rem;
+    color: red;
+}

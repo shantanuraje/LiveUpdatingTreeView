@@ -11,7 +11,6 @@ var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
 
-var port = process.env.PORT || 3000;
 
 var mongoose = require('mongoose');
 var Factory = require('./app/models/factory.js');
