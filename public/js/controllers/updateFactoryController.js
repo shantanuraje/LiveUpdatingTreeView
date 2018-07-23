@@ -98,18 +98,15 @@ function updateFactoryController($scope, $mdDialog, index, factory, factoryNames
   }
   
   $scope.answer = function () {
-    // if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound()) {
-    //   if ($scope.validateLowerLessThanUpper()) {
-    //     $mdDialog.hide({ index: index, factory: factory });
-    //     console.log("awesome");
+    if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound()) {
+      if ($scope.validateLowerLessThanUpper()) {
+        $mdDialog.hide({ index: index, factory: factory });
+        console.log("awesome");
         
-    //   }
-    // }else{
-    //   console.log("something went wrong");
-    // }
-    console.log("submitting", factory);
-    
-    $mdDialog.hide({ index: index, factory: factory });
+      }
+    }else{
+      console.log("something went wrong");
+    }
     
   };
 
