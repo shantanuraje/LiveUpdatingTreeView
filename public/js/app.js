@@ -17,6 +17,12 @@ function mainController($scope, $http, $mdDialog, socket) {
       factories: docs
     }
 
+    $scope.factoryNames = []
+    $scope.tree.factories.forEach(element => {
+      // console.log("Names:", element.name)
+      $scope.factoryNames.push(element.name);
+    });
+
     console.log("Tree", $scope.tree);
   })
 
@@ -63,9 +69,12 @@ function mainController($scope, $http, $mdDialog, socket) {
 
     })
       .then(function (answer) {
-        let factory = new Factory(answer.name, answer.numOfChildren, answer.lowerBound, answer.upperBound);
-        console.log("add factory", factory);
-        socket.emit('add:factory', factory);
+        console.log("answer:", answer);
+        
+        let newFactory = new Factory(null, answer.name,  answer.numOfChildren, answer.lowerBound, answer.upperBound);
+        
+        console.log("add factory", newFactory);
+        socket.emit('add:factory', newFactory);
       }, function () {
         $scope.newFactoryData = 'You cancelled the dialog.';
       });

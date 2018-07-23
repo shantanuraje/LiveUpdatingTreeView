@@ -107,8 +107,9 @@ function newFactoryController($scope, $mdDialog, factoryNames) {
   $scope.answer = function () {
     if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound() ) {
       if ($scope.validateLowerLessThanUpper()) {
-        $mdDialog.hide($scope.newFactoryData);
+        console.log($scope.newFactoryData);
         console.log("awesome");
+        $mdDialog.hide($scope.newFactoryData);
         
       }
     }else{

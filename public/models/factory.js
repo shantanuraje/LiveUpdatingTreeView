@@ -9,15 +9,20 @@ class Factory{
     }
 
     getRandomArbitraryNumbers(numOfChildren, lowerBound, upperBound) {
+        // console.log("reached random num gen");
+        // console.log(numOfChildren, lowerBound, upperBound);
+        
         let result = [];
         while(numOfChildren > 0){
-            let num = Math.random() * (upperBound - lowerBound) + lowerBound
+            let num = (Math.random() * (upperBound - lowerBound) + lowerBound).toFixed(3)
+            
             if(!result.includes(num)){
               result.push(num);
               numOfChildren--;
             }
       
         }
+        // console.log("reached end", result);
         return result;
       }
 }

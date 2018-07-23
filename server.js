@@ -25,7 +25,7 @@ let db = mongoose.connection;
 
 app.use(express.static(__dirname + '/public'));
 
-server.listen(config[environment].port, function () {
+server.listen(config[environment].port, config[environment].host, function () {
     console.log(`listening on ${config[environment].host}: ${config[environment].port}`);
 });
 
@@ -58,7 +58,16 @@ io.on('connection', function (socket) {
                 return handleError(err);
             } else {
                 console.log("Factory validation successful");
-                io.sockets.emit("send:factory", factoryInstance)
+                Factory.findOne({name: factoryInstance.name}, function (err, factory) {
+                    if (err) {
+                        console.log(err);
+                        io.sockets.emit("error:not found", err)
+                    }else{
+
+                        io.sockets.emit("send:factory", factory)
+                    }
+                    
+                })
 
             }
             // saved!
