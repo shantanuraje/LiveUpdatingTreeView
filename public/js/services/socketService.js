@@ -1,4 +1,5 @@
-myApp.factory('socket', function ($rootScope) {
+//custom service to handle on and emit events provided by socket library
+treeViewApp.factory('socket', function ($rootScope) {
     var socket = io.connect();
     return {
       on: function (eventName, callback) {
