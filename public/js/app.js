@@ -68,12 +68,20 @@ function mainController($scope, $mdDialog, socket) {
   //function to display dialog to add a new factory
   $scope.showDialog = function (ev) {
     let factory; //undefined
+
+    //get all factory names in an array, used to check for duplicate factory names
+    let factoryNames = []
+    $scope.tree.factories.forEach(element => {
+        factoryNames.push(element.name);
+    });
+    
+
     $mdDialog.show({
       templateUrl: 'add-factory-dialog.html',
       parent: angular.element(document.body),
       controller: newFactoryController,
       targetEvent: ev,
-      locals: { factory: factory, factoryNames: $scope.factoryNames },//attach undefined factory object and existing factory names to check for duplicates
+      locals: { factory: factory, factoryNames: factoryNames },//attach undefined factory object and existing factory names to check for duplicates
       clickOutsideToClose: true,
       fullscreen: $scope.customFullscreen
     })
