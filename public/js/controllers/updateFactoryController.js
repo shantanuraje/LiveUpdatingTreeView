@@ -38,7 +38,7 @@ function updateFactoryController($scope, $mdDialog, factory, factoryNames) {
 
   //function to validate number of children
   $scope.validateNumOfChildren = function () {
-    if (typeof parseInt($scope.newFactoryData.numOfChildren) != 'number'  || $scope.newFactoryData.numOfChildren < 1 || $scope.newFactoryData.numOfChildren > 15 || isNaN(parseInt($scope.newFactoryData.numOfChildren))) {
+    if (typeof parseInt($scope.newFactoryData.numOfChildren) != 'number' || !Number.isInteger($scope.newFactoryData.numOfChildren)  || $scope.newFactoryData.numOfChildren < 1 || $scope.newFactoryData.numOfChildren > 15 || isNaN(parseInt($scope.newFactoryData.numOfChildren))) {
       $scope.numOfChildrenInValid = true;
       return false;
       
