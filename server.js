@@ -71,17 +71,17 @@ io.on('connection', function (socket) {
     });
 
     //DELETE FACTORY: listener event to handle when a factory is deleted from the client
-    socket.on("delete:factory", function (data) {
+    socket.on("delete:factory", function (factory) {
         console.log("delete:factory");
         //find this factory by querying the database
-        Factory.findByIdAndRemove(data.factory._id, function (err) {
+        Factory.findByIdAndRemove(factory._id, function (err) {
             if (err) {
                 //if not found, emit error message back to client
                 io.sockets.emit("error:not found", err);
                 console.error(err);
             } else {
                 //if found, emit id of factory to be removed back to client
-                io.sockets.emit("remove:factory", data.index);
+                io.sockets.emit("remove:factory", factory._id);
             }
         });
     });
