@@ -1,6 +1,6 @@
 function newFactoryController($scope, $mdDialog, factoryNames) {  
   console.log("newFactoryController");
-  //defined a blank factory to be filled by user
+  //define a blank factory to be filled by user
   $scope.newFactoryData = {
     name: '',
     numOfChildren: '',
@@ -86,7 +86,7 @@ function newFactoryController($scope, $mdDialog, factoryNames) {
     }
   };
 
-  //function to run when the user clicks ok
+  //function to run when the user clicks ok to add new factory
   $scope.answer = function () {
     //make sure all fields are validated
     if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound() ) {
