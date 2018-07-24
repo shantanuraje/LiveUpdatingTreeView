@@ -4,8 +4,6 @@
             <div class="md-toolbar-tools">
                 <h2>Please enter deatils of the new Factory</h2>
                 <span flex></span>
-                <!-- <md-button class="md-icon-button" ng-click="cancel()">
-                    </md-button> -->
             </div>
         </md-toolbar>
 
@@ -32,7 +30,6 @@
                         <span class="error-messages" ng-if="lowerBoundInValid">Please enter a number.</span>
                     </md-input-container>
 
-
                     <md-input-container>
                         <label>Upper Bound</label>
                         <input ng-model="newFactoryData.upperBound" type="number">
@@ -40,19 +37,14 @@
                     </md-input-container>
                 </div>
                 <span class="error-messages" ng-if="lowerNotLessThanUpper">Make sure lowerbound is less than the upperBound</span>
-
             </div>
-
         </md-dialog-content>
 
-
-
-
         <md-dialog-actions layout="row">
-
             <md-button ng-click="cancel()">
                 Cancel
             </md-button>
+            
             <md-button ng-click="answer()">
                 Ok
             </md-button>

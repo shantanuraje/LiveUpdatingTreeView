@@ -26,12 +26,8 @@ md-input-container{
 .children{
     margin-left: 2.5%;
 }
-/* #main{
-    background-color: #78e08f;
-} */
 md-chip{
     background-color: #0a3d62 !important;
-    /* border-color:  #e7865c !important;*/
     color: white !important; 
 }
 .error-messages{
