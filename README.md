@@ -29,6 +29,7 @@ Back-End Programming Challenge : Demonstrate your knowledge of several technolog
 + Application runs on **port: 3000**, both on localhost as well as the AWS server
 + **To deploy the project locally**
 	+ Make sure you have NodeJS and MongoDB installed on your system
+	+ Application will connect to a MongoDB instance running on port 27017
 	+ AngularJS and AngularJS Material are download from a CDN
 	+ Clone this Git repository
 	+ Go to the root of the downloaded project
