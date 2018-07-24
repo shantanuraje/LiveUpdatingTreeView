@@ -26,7 +26,7 @@ function updateFactoryController($scope, $mdDialog, factory, factoryNames) {
 
   //function to validate factory name
   $scope.validateFactoryName = function () {
-    if ($scope.newFactoryData.name == "" || $scope.newFactoryData.name.match(/[^a-zA-Z0-9 ]/)) {
+    if ($scope.newFactoryData.name == "" || $scope.newFactoryData.name.match(/[^a-zA-Z0-9]/)) {
       $scope.factoryNameInValid = true;
       $scope.duplicateFactoryName = false;
       return false;      

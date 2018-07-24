@@ -11,7 +11,7 @@ let factorySchema = new mongoose.Schema({
         validate: {
             validator: function (value) {
                 //check if factory name is null or contains any special characters 
-                if (value == "" || value.match(/[^a-zA-Z0-9 ]/)) {
+                if (value == "" || value.match(/[^a-zA-Z0-9]/)) {
                     return false;
                 } else {
                     return true;

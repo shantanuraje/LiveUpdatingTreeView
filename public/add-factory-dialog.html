@@ -13,7 +13,7 @@
                     <input type="hidden" ng-model="newFactoryData._id">
                     <label>Factory Name</label>
                     <input ng-model="newFactoryData.name" type="text" minlength="1">
-                    <span class="error-messages" ng-if="factoryNameInValid">Please enter a valid name</span>
+                    <span class="error-messages" ng-if="factoryNameInValid">Please enter a valid name without any spaces</span>
                     <span class="error-messages" ng-if="duplicateFactoryName">This factory name exists. Please use another name</span>
                 </md-input-container>
 
