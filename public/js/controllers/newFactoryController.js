@@ -1,8 +1,6 @@
-function newFactoryController($scope, $mdDialog, factoryNames) {
-
-  
-  console.log(factoryNames);
-  
+function newFactoryController($scope, $mdDialog, factoryNames) {  
+  console.log("newFactoryController");
+  //defined a blank factory to be filled by user
   $scope.newFactoryData = {
     name: '',
     numOfChildren: '',
@@ -10,111 +8,93 @@ function newFactoryController($scope, $mdDialog, factoryNames) {
     upperBound: '',
     children: []
   }
-
-  console.log("newFactoryController");
+  //function to hide dialog box
   $scope.hide = function () {
     $mdDialog.hide();
   };
-
+  
+  //function to cancel dialog box
   $scope.cancel = function () {
     $mdDialog.cancel();
   };
 
+  //function to check for duplicate names
   $scope.checkDuplicateFactoryName = function () {
-    console.log($scope.newFactoryData.name, factoryNames);
-    
     if (factoryNames.includes($scope.newFactoryData.name)) {
       $scope.duplicateFactoryName = true;
-      console.log("Duplicate name: cannot be added");
       return true;
       
     } else {
       $scope.duplicateFactoryName = false;
-      console.log("Valid name: can be added");
-      return false;
-      
+      return false;      
     }
-  }
+  };
 
+  //function to validate factory name
   $scope.validateFactoryName = function () {
     if ($scope.newFactoryData.name == "" || $scope.newFactoryData.name.match(/[^a-zA-Z0-9 ]/)) {
       $scope.factoryNameInValid = true;
       $scope.duplicateFactoryName = false;
-      console.log("not valid");
-      return false;
-      
+      return false;      
     } else {
       $scope.factoryNameInValid = false;
-      console.log("valid");
-      return true;
-      
-    }
-  }
-
-  $scope.validateNumOfChildren = function () {
-    if (typeof parseInt($scope.newFactoryData.numOfChildren) != 'number'  || $scope.newFactoryData.numOfChildren < 1 || $scope.newFactoryData.numOfChildren > 15 || isNaN(parseInt($scope.newFactoryData.numOfChildren))) {
-      $scope.numOfChildrenInValid = true;
-      console.log("numOfChildren not valid");
-      return false;
-      
-    } else {
-      $scope.numOfChildrenInValid = false;
-      console.log("numOfChildren is a number");
-      return true;
-    }
-  }
-
-  $scope.validateLowerBound = function name() {
-    console.log($scope.newFactoryData.lowerBound, typeof $scope.newFactoryData.lowerBound);
-    if (typeof parseFloat($scope.newFactoryData.lowerBound) === 'number' && $scope.newFactoryData.lowerBound !== undefined && !isNaN(parseFloat($scope.newFactoryData.lowerBound)) && isFinite(parseFloat($scope.newFactoryData.lowerBound))) {
-      $scope.lowerBoundInValid = false;
-      console.log("lowerBound is valid");
-      return true;
-    } else {
-      $scope.lowerBoundInValid = true;
-      console.log("lowerBound not valid");
-      return false;
-    }
-  }
-
-  $scope.validateUpperBound = function name() {
-    console.log($scope.newFactoryData.upperBound, typeof $scope.newFactoryData.upperBound);
-    if (typeof parseFloat($scope.newFactoryData.upperBound) === 'number' && $scope.newFactoryData.upperBound !== undefined && !isNaN(parseFloat($scope.newFactoryData.upperBound)) && isFinite(parseFloat($scope.newFactoryData.upperBound))) {
-      $scope.upperBoundInValid = false;
-      console.log("upperBound is valid");
-      return true;
-    } else {
-      $scope.upperBoundInValid = true;
-      console.log("upperBound not valid");
-      return false;
-    }
-  }
-
-  $scope.validateLowerLessThanUpper = function () {
-    if (parseInt($scope.newFactoryData.lowerBound) >= parseInt($scope.newFactoryData.upperBound)) {
-      $scope.lowerNotLessThanUpper = true;
-      console.log("lower bound greater than or equal to upperbound: invalid");
-      return false;
-      
-    } else {
-      $scope.lowerNotLessThanUpper = false;
-      console.log("lower bound less than upperbound: valid");
-      return true;
-      
-    }
-  }
-
-  $scope.answer = function () {
-    if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound() ) {
-      if ($scope.validateLowerLessThanUpper()) {
-        console.log($scope.newFactoryData);
-        console.log("awesome");
-        $mdDialog.hide($scope.newFactoryData);
-        
-      }
-    }else{
-      console.log("something went wrong");
+      return true;      
     }
   };
 
+  //function to validate number of children
+  $scope.validateNumOfChildren = function () {
+    if (typeof parseInt($scope.newFactoryData.numOfChildren) != 'number'  || $scope.newFactoryData.numOfChildren < 1 || $scope.newFactoryData.numOfChildren > 15 || isNaN(parseInt($scope.newFactoryData.numOfChildren))) {
+      $scope.numOfChildrenInValid = true;
+      return false;      
+    } else {
+      $scope.numOfChildrenInValid = false;
+      return true;
+    }
+  };
+
+  //function to validate lower bound
+  $scope.validateLowerBound = function name() {
+    if (typeof parseFloat($scope.newFactoryData.lowerBound) === 'number' && $scope.newFactoryData.lowerBound !== undefined && !isNaN(parseFloat($scope.newFactoryData.lowerBound)) && isFinite(parseFloat($scope.newFactoryData.lowerBound))) {
+      $scope.lowerBoundInValid = false;
+      return true;
+    } else {
+      $scope.lowerBoundInValid = true;
+      return false;
+    }
+  };
+
+  //function to validate upper bound
+  $scope.validateUpperBound = function name() {
+    if (typeof parseFloat($scope.newFactoryData.upperBound) === 'number' && $scope.newFactoryData.upperBound !== undefined && !isNaN(parseFloat($scope.newFactoryData.upperBound)) && isFinite(parseFloat($scope.newFactoryData.upperBound))) {
+      $scope.upperBoundInValid = false;
+      return true;
+    } else {
+      $scope.upperBoundInValid = true;
+      return false;
+    }
+  };
+
+  //function to validate if lower bound is less than upperbound
+  $scope.validateLowerLessThanUpper = function () {
+    if (parseInt($scope.newFactoryData.lowerBound) >= parseInt($scope.newFactoryData.upperBound)) {
+      $scope.lowerNotLessThanUpper = true;
+      return false;      
+    } else {
+      $scope.lowerNotLessThanUpper = false;
+      return true;      
+    }
+  };
+
+  //function to run when the user clicks ok
+  $scope.answer = function () {
+    //make sure all fields are validated
+    if ($scope.validateFactoryName() && !$scope.checkDuplicateFactoryName() && $scope.validateNumOfChildren() && $scope.validateLowerBound() && $scope.validateUpperBound() ) {
+      if ($scope.validateLowerLessThanUpper()) {
+        $mdDialog.hide($scope.newFactoryData);        
+      }
+    }else{
+      console.log("Something went wrong. Please check factory details");
+    }
+  };
 }
